@@ -10,6 +10,7 @@ import {
   GoogleOutline,
 } from "@styled-icons/evaicons-outline";
 import { Discord } from "@styled-icons/remix-line";
+import { signIn } from "next-auth/react";
 
 function Login() {
   return (
@@ -153,6 +154,7 @@ function Login() {
 
                 <div>
                   <a
+                    onClick={() => signIn("discord")}
                     href="#"
                     className="inline-flex w-full justify-center rounded-md border border-gray-300 bg-white px-2 py-2 text-sm font-medium text-gray-500 shadow-sm hover:bg-gray-50"
                   >

@@ -28,6 +28,7 @@ model Account {
   user              User    @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@unique([provider, providerAccountId])
+  @@index([userId])
 }
 
 model Session {
@@ -36,6 +37,8 @@ model Session {
   userId       String
   expires      DateTime
   user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
 }
 
 model User {
@@ -46,6 +49,45 @@ model User {
   image         String?
   accounts      Account[]
   sessions      Session[]
+
+  decks Deck[]
+}
+
+model Deck {
+  id   String @id @default(cuid())
+  name String
+
+  ownerId String
+  owner   User   @relation(fields: [ownerId], references: [id])
+
+  cards Card[]
+
+  @@index([ownerId])
+}
+
+model Card {
+  id   String @id @default(cuid())
+  name String @unique
+
+  deckId String
+  deck   Deck   @relation(fields: [deckId], references: [id])
+
+  gameId String
+  game   Game   @relation(fields: [gameId], references: [id])
+
+  cardNumber   String?
+  valueInCents Int?
+  cardTypes    String?
+  rarity       String?
+
+  @@index([deckId])
+  @@index([gameId])
+}
+
+model Game {
+  id   String @id @default(cuid())
+  name String @unique
+  cards Card[]
 }
 
 model VerificationToken {
