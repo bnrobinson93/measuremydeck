@@ -1,6 +1,6 @@
 'use client'
 
-import { Metadata, type NextPage } from "next";
+import { type NextPage } from "next";
 import Link from "next/link";
 
 const Home: NextPage = () => {
