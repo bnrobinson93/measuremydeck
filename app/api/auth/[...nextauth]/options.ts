@@ -3,7 +3,6 @@ import { type NextAuthOptions } from "next-auth";
 import { env } from "@/env/server.mjs";
 import { prisma } from "@/server/db/client";
 
-import EmailProvider from "next-auth/providers/email";
 import CredentialsProvider from "next-auth/providers/credentials";
 import FacebookProvider from "next-auth/providers/facebook";
 import GoogleProvider from "next-auth/providers/google";
@@ -21,16 +20,10 @@ export const authOptions: NextAuthOptions = {
       return session;
     },
   },
-  // Configure one or more authentication providers
   adapter: PrismaAdapter(prisma),
   providers: [
-    /* EmailProvider({
-      server: process.env.EMAIL_SERVER,
-      from: process.env.EMAIL_FROM,
-      // maxAge: 24 * 60 * 60, // How long email links are valid for (default 24h)
-    }), */
     CredentialsProvider({
-      name: "Username and password",
+      name: "Email and password",
       credentials: {
         email: { label: "Email", type: "text", placeholder: "Email" },
         password: { label: "Password", type: "password", placeholder: "" },
@@ -64,6 +57,15 @@ export const authOptions: NextAuthOptions = {
       clientSecret: env.DISCORD_CLIENT_SECRET,
     }),
   ],
+  theme: {
+    colorScheme: "light", // "auto" | "dark" | "light"
+    brandColor: "#6366f1", // Hex color code
+    logo:
+      env.NODE_ENV === "development"
+        ? "http://localhost:3000/LogoWithText.svg"
+        : "https://measuremydeck.com/LogoWithText.svg",
+    buttonText: "#6366f1", // Hex color code
+  },
 };
 
 export default authOptions;

@@ -9,7 +9,7 @@ async function Header() {
   const session = await getServerSession(authOptions);
 
   return (
-    <nav className="flex justify-between bg-indigo-50 p-3 align-middle">
+    <nav className="flex justify-between p-3 align-middle">
       <div className="flex align-middle">
         <Link
           href="#main-content"
@@ -25,6 +25,34 @@ async function Header() {
           Measure My Deck
         </Link>
       </div>
+      {session?.user && (
+        <div className="space-between flex items-center justify-center gap-3 align-middle">
+          <Link href="/decks" className="transition-all hover:text-indigo-700">
+            View your decks
+          </Link>
+          <Link
+            href="/decks/create"
+            className="transition-all hover:text-indigo-700"
+          >
+            Create a deck
+          </Link>
+          <Link
+            href="/explore"
+            className="transition-all hover:text-indigo-700"
+          >
+            Explore
+          </Link>
+          <Link
+            href="/upgrade"
+            className="transition-all hover:text-indigo-700"
+          >
+            Upgrade
+          </Link>
+          <Link href="/social" className="transition-all hover:text-indigo-700">
+            Social
+          </Link>
+        </div>
+      )}
       <div className="flex justify-evenly align-middle">
         <SignInOut session={session} />
       </div>
